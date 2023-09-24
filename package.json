@@ -1,6 +1,6 @@
 {
   "name": "dep-cleaner",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "description": "",
   "main": "dist/index.js",
   "license": "MIT",
@@ -11,7 +11,14 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "tsc"
   },
-  "keywords": [],
+  "keywords": [
+    "dep-cleaner",
+    "depcheck",
+    "clean",
+    "dependencies",
+    "devDependencies",
+    "package.json"
+  ],
   "author": "LyricalString <lyricalstring@outlook.es>",
   "devDependencies": {
     "@types/minimist": "^1.2.2",

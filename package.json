@@ -1,8 +1,9 @@
 {
   "name": "dep-cleaner",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "",
   "main": "dist/index.js",
+  "license": "MIT",
   "bin": {
     "dep-cleaner": "dist/index.js"
   },
@@ -12,7 +13,6 @@
   },
   "keywords": [],
   "author": "LyricalString <lyricalstring@outlook.es>",
-  "license": "N/A",
   "devDependencies": {
     "@types/minimist": "^1.2.2",
     "@types/node": "^20.6.4",

@@ -1,12 +1,11 @@
 #!/usr/bin/env node
 
-import {Logger} from "lovely-logs";
+import { Logger } from "lovely-logs";
 import depcheck from "depcheck";
-import {execSync} from "child_process";
-import minimist from 'minimist';
-const argv = minimist(process.argv.slice(2));
+import { execSync } from "child_process";
+import readline from "readline";
 
-function getAvailablePackageManager() {
+function getAvailablePackageManager(): string {
   const managers = ["bun", "pnpm", "yarn", "npm"];
   for (const manager of managers) {
     try {
@@ -28,30 +27,38 @@ const options = {
 
 Logger.info(`Using ${packageManager} as package manager.`);
 
-depcheck(options.path, options, (unused) => {
+depcheck(options.path, options, async (unused) => {
   const unusedDeps = unused.dependencies;
   if (unusedDeps.length) {
-    if (argv["show-only"]) {
-      Logger.info(`Unused dependencies: ${unusedDeps.join(", ")}`);
-    } else {
-      const uninstallCommand = `${packageManager} ${
-        packageManager === "yarn" ? "remove" : "uninstall"
-      } ${unusedDeps.join(" ")}`;
-      try {
-        Logger.info(
-          `Uninstalling with ${packageManager}: ${unusedDeps.join(", ")}`,
-        );
-        execSync(uninstallCommand, { stdio: "inherit" });
-      } catch (error) {
-        if (error instanceof Error) {
-          Logger.error(`Error during uninstallation: ${error.message}`);
-        } else {
-          Logger.error(`An unexpected error occurred: ${String(error)}`);
+    Logger.info("Unused dependencies detected:\n" + unusedDeps.map(dep => `- ${dep}`).join("\n"));
+
+    const rl = readline.createInterface({
+      input: process.stdin,
+      output: process.stdout,
+    });
+
+    rl.question("Do you want to uninstall these dependencies? (yes/no) ", (answer) => {
+      if (answer.toLowerCase() === "yes") {
+        const uninstallCommand = `${packageManager} ${
+          packageManager === "yarn" ? "remove" : "uninstall"
+        } ${unusedDeps.join(" ")}`;
+        try {
+          Logger.info(`Uninstalling with ${packageManager}: ${unusedDeps.join(", ")}`);
+          execSync(uninstallCommand, { stdio: "inherit" });
+          Logger.info("Uninstallation completed.");
+        } catch (error) {
+          if (error instanceof Error) {
+            Logger.error(`Error during uninstallation: ${error.message}`);
+          } else {
+            Logger.error(`An unexpected error occurred: ${String(error)}`);
+          }
         }
+      } else {
+        Logger.info("Uninstallation aborted by the user.");
       }
-    }
+      rl.close();
+    });
   } else {
     Logger.info("No unused dependencies found.");
   }
-  Logger.info("Done!");
 });

@@ -74,19 +74,19 @@ Using tools like [Husky](https://github.com/typicode/husky), you can add pre-com
 
 ### Example using Husky:
 
-1. Install Husky:
+1. **Install Husky:**
 
 ```
 npm install husky --save-dev
 ```
 
-2. Add a pre-push hook:
+2. **Add a pre-push hook:**
 
 ```
 "husky": {
-"hooks": {
-"pre-push": "dep-cleaner"
-}
+    "hooks": {
+        "pre-push": "dep-cleaner"
+    }
 }
 ```
 

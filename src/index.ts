@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 import {Logger} from "lovely-logs";
 import depcheck from "depcheck";
 import {execSync} from "child_process";

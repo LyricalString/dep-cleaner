@@ -49,7 +49,57 @@ To only display the unused dependencies without uninstalling:
 ```
 dep-cleaner --show-only
 ```
-`
+
+# 🤖 Automation Integration
+
+To maximize the benefits of `dep-cleaner`, it's highly recommended to integrate it into your project's automation workflow. This ensures that unused dependencies are consistently identified and removed, keeping your project lean and efficient.
+
+## Continuous Integration (CI):
+
+Integrate `dep-cleaner` into your CI pipeline to automatically check for unused dependencies during every build. This way, you'll be alerted if any unused dependencies exist before deploying or releasing your code.
+
+### Example for a CI script:
+
+@@@
+# Install dep-cleaner
+npm install -g dep-cleaner
+
+# Run dep-cleaner
+dep-cleaner
+@@@
+
+## Git Hooks:
+
+Using tools like [Husky](https://github.com/typicode/husky), you can add pre-commit or pre-push hooks that run `dep-cleaner` to ensure no unused dependencies are committed to the repository.
+
+### Example using Husky:
+
+1. Install Husky:
+
+@@@
+npm install husky --save-dev
+@@@
+
+2. Add a pre-push hook:
+
+@@@
+"husky": {
+"hooks": {
+"pre-push": "dep-cleaner"
+}
+}
+@@@
+
+This ensures that before every push to the repository, `dep-cleaner` runs and cleans up any unused dependencies.
+
+## Recommendations:
+
+- **Continuous Integration (CI)**: For teams or larger projects, integrating into the CI pipeline ensures a clean codebase during every build.
+
+- **Development Environment**: For individual developers, using Git hooks ensures the local codebase remains clean during development.
+
+By making `dep-cleaner` a part of your regular development and deployment process, you ensure a leaner, more efficient, and less error-prone codebase.
+
 ## 🔧 Configuration
 
 By default, the script uses the fastest detected package manager. Ensure you have at least one of the supported package managers (`bun`, `pnpm`, `yarn`, `npm`) installed.

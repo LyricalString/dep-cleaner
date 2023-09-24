@@ -1,4 +1,4 @@
-# 🧹 Cleanup Unused Dependencies
+# Cleanup Unused Dependencies
 
 Easily detect and automatically uninstall unused npm dependencies with a single command!
 

@@ -1,6 +1,6 @@
 {
   "name": "dep-cleaner",
-  "version": "0.0.3",
+  "version": "1.0",
   "description": "",
   "main": "dist/index.js",
   "bin": {
@@ -11,7 +11,7 @@
     "build": "tsc"
   },
   "keywords": [],
-  "author": "LyricalString <alex.m@hexmount.io>",
+  "author": "LyricalString <lyricalstring@outlook.es>",
   "license": "N/A",
   "devDependencies": {
     "@types/minimist": "^1.2.2",

@@ -1,6 +1,6 @@
 {
   "name": "dep-cleaner",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "",
   "main": "dist/index.js",
   "license": "MIT",
@@ -28,7 +28,8 @@
   },
   "dependencies": {
     "depcheck": "^1.4.6",
-    "lovely-logs": "^1.2.2"
+    "lovely-logs": "^1.2.2",
+    "minimist": "^1.2.8"
   },
   "files": [
     "dist"

@@ -60,13 +60,13 @@ Integrate `dep-cleaner` into your CI pipeline to automatically check for unused 
 
 ### Example for a CI script:
 
-@@@
+```
 # Install dep-cleaner
 npm install -g dep-cleaner
 
 # Run dep-cleaner
 dep-cleaner
-@@@
+```
 
 ## Git Hooks:
 
@@ -76,19 +76,19 @@ Using tools like [Husky](https://github.com/typicode/husky), you can add pre-com
 
 1. Install Husky:
 
-@@@
+```
 npm install husky --save-dev
-@@@
+```
 
 2. Add a pre-push hook:
 
-@@@
+```
 "husky": {
 "hooks": {
 "pre-push": "dep-cleaner"
 }
 }
-@@@
+```
 
 This ensures that before every push to the repository, `dep-cleaner` runs and cleans up any unused dependencies.
 

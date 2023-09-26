@@ -5,6 +5,8 @@ import depcheck from "depcheck";
 import { execSync } from "child_process";
 import inquirer from 'inquirer';
 
+console.log('test')
+
 function getAvailablePackageManager(): string {
   const managers = ["bun", "pnpm", "yarn", "npm"];
   for (const manager of managers) {

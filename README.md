@@ -13,6 +13,8 @@ Our tool extends the capabilities of depcheck by automating the cleanup process 
 - 🕵️‍♂️ **Detect Unused Dependencies**: The tool scans your project and identifies unused npm dependencies.
 - 📦 **Fastest Package Manager**: Utilizes the quickest available package manager, prioritizing `bun`, `pnpm`, `yarn`, and `npm`.
 - 🤖 **Display Mode**: Option to only display unused dependencies without uninstalling them.
+- ✅ **Interactive Cleanup**: Offers an interactive mode to select which unused dependencies to uninstall. 
+- 🚫 *+Skip Confirmation**: Speed up the cleanup process by bypassing user confirmation using the **--no-confirm** flag.
 
 ## 🛠 Installation
 

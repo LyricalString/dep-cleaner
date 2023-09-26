@@ -3,7 +3,7 @@
 import { Logger } from "lovely-logs";
 import depcheck from "depcheck";
 import { execSync } from "child_process";
-import readline from "readline";
+import inquirer from 'inquirer';
 
 function getAvailablePackageManager(): string {
   const managers = ["bun", "pnpm", "yarn", "npm"];
@@ -19,6 +19,7 @@ function getAvailablePackageManager(): string {
 }
 
 const packageManager = getAvailablePackageManager();
+const noConfirm = process.argv.includes("--no-confirm");  // <-- Check for the flag
 
 const options = {
   path: process.cwd(),
@@ -32,33 +33,47 @@ depcheck(options.path, options, async (unused) => {
   if (unusedDeps.length) {
     Logger.info("Unused dependencies detected:\n" + unusedDeps.map(dep => `- ${dep}`).join("\n"));
 
-    const rl = readline.createInterface({
-      input: process.stdin,
-      output: process.stdout,
-    });
-
-    rl.question("Do you want to uninstall these dependencies? (yes/no) ", (answer) => {
-      if (answer.toLowerCase() === "yes") {
-        const uninstallCommand = `${packageManager} ${
-          packageManager === "yarn" ? "remove" : "uninstall"
-        } ${unusedDeps.join(" ")}`;
-        try {
-          Logger.info(`Uninstalling with ${packageManager}: ${unusedDeps.join(", ")}`);
-          execSync(uninstallCommand, { stdio: "inherit" });
-          Logger.info("Uninstallation completed.");
-        } catch (error) {
-          if (error instanceof Error) {
-            Logger.error(`Error during uninstallation: ${error.message}`);
-          } else {
-            Logger.error(`An unexpected error occurred: ${String(error)}`);
+    if (noConfirm) {
+      uninstallDependencies(unusedDeps);  // <-- Directly uninstall if flag is set
+    } else {
+      // Use inquirer for the interactive checkboxes
+      const answers = await inquirer.prompt([{
+        type: 'checkbox',
+        message: 'Select dependencies to uninstall:',
+        name: 'depsToUninstall',
+        choices: unusedDeps,
+        validate: function(answer) {
+          if (answer.length < 1) {
+            return 'You must choose at least one dependency.';
           }
+          return true;
         }
+      }]);
+
+      if (answers.depsToUninstall.length) {
+        uninstallDependencies(answers.depsToUninstall);  // <-- Uninstall the selected deps
       } else {
         Logger.info("Uninstallation aborted by the user.");
       }
-      rl.close();
-    });
+    }
   } else {
     Logger.info("No unused dependencies found.");
   }
 });
+
+function uninstallDependencies(deps: string[]) {
+  const uninstallCommand = `${packageManager} ${
+    packageManager === "yarn" ? "remove" : "uninstall"
+  } ${deps.join(" ")}`;
+  try {
+    Logger.info(`Uninstalling with ${packageManager}: ${deps.join(", ")}`);
+    execSync(uninstallCommand, { stdio: "inherit" });
+    Logger.info("Uninstallation completed.");
+  } catch (error) {
+    if (error instanceof Error) {
+      Logger.error(`Error during uninstallation: ${error.message}`);
+    } else {
+      Logger.error(`An unexpected error occurred: ${String(error)}`);
+    }
+  }
+}

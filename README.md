@@ -14,7 +14,7 @@ Our tool extends the capabilities of depcheck by automating the cleanup process 
 - 📦 **Fastest Package Manager**: Utilizes the quickest available package manager, prioritizing `bun`, `pnpm`, `yarn`, and `npm`.
 - 🤖 **Display Mode**: Option to only display unused dependencies without uninstalling them.
 - ✅ **Interactive Cleanup**: Offers an interactive mode to select which unused dependencies to uninstall. 
-- 🚫 *+Skip Confirmation**: Speed up the cleanup process by bypassing user confirmation using the **--no-confirm** flag.
+- 🚫 **Skip Confirmation**: Speed up the cleanup process by bypassing user confirmation using the **--no-confirm** flag.
 
 ## 🛠 Installation
 
@@ -50,6 +50,12 @@ To only display the unused dependencies without uninstalling:
 
 ```
 dep-cleaner --show-only
+```
+
+To uninstall unused dependencies without confirmation:
+
+```
+dep-cleaner --no-confirm
 ```
 
 # 🤖 Automation Integration

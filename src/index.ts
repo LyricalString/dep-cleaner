@@ -31,8 +31,6 @@ Logger.info(`Using ${packageManager} as package manager.`);
 depcheck(options.path, options, async (unused) => {
   const unusedDeps = unused.dependencies;
   if (unusedDeps.length) {
-    Logger.info("Unused dependencies detected:\n" + unusedDeps.map(dep => `- ${dep}`).join("\n"));
-
     if (noConfirm) {
       uninstallDependencies(unusedDeps);  // <-- Directly uninstall if flag is set
     } else {
